@@ -13,14 +13,18 @@ class Persistence:
 
 
 class SeasonalNaive:
-    def __init__(self, seasonal_period: int = 52):
+    def __init__(self, seasonal_period: int = 52, lookback: int = 52):
+        if seasonal_period > lookback:
+            raise ValueError("seasonal_period must be <= lookback")
         self.seasonal_period = seasonal_period
+        self.lookback = lookback
 
     def fit(self, x, y):
         return self
 
     def predict(self, x):
-        return x[:, -self.seasonal_period]
+        # The first lookback columns are local observations, oldest first.
+        return x[:, self.lookback - self.seasonal_period]
 
 
 class RidgeContext:
