@@ -1,0 +1,20 @@
+project: worldcast
+version: 0.1.0
+world:
+  cities: 20
+  steps: 1000
+  seed: 7
+  coupling: 0.12
+data:
+  target: passenger_demand
+  lookback: 52
+  horizon: 1
+  split: chronological
+  train_fraction: 0.70
+models:
+  - persistence
+  - seasonal_naive
+  - ridge_context
+metrics:
+  - mae
+  - rmse
